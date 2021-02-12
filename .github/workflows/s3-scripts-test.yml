@@ -1,0 +1,14 @@
+name: 'S3 Scripts Test'
+on:
+  workflow_dispatch:
+    inputs:
+      s3_directory:
+        description: 'test hosted skill script'
+        required: true
+
+jobs:
+  printInputs:
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+      echo "S3 directory: ${{ github.event.inputs.s3_directory }}"
