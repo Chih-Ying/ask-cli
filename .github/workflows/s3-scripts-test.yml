@@ -5,6 +5,9 @@ on:
       s3_directory:
         description: 'test hosted skill script'
         required: true
+  push:
+    branches:
+      - test
 
 jobs:
   printInputs:
