@@ -14,4 +14,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - run: |
-      echo "S3 directory: ${{ github.event.inputs.s3_directory }}"
+       echo "S3 directory ${{ github.event.inputs.s3_directory }}"
