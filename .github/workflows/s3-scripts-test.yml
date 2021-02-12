@@ -8,6 +8,8 @@ on:
   push:
     branches:
       - test
+    paths-ignore:
+      - '**.md'
 
 jobs:
   printInputs:
@@ -15,3 +17,32 @@ jobs:
     steps:
     - run: |
       echo "S3 directory: ${{ github.event.inputs.s3_directory }}"
+
+  build:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        node: [12]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node }}
+    - name: Set up Python 3.x
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    - run: npm install
+    - run: npm link
+    - run: npm run integration-test
+      env:
+        ASK_VENDOR_ID: test
+        ASK_REFRESH_TOKEN: test
+        AWS_ACCESS_KEY_ID: test
+        AWS_SECRET_ACCESS_KEY: test
+        ASK_S3_SCRIPTS_BASE_URL: ${{ github.event.inputs.s3_directory }}
+
