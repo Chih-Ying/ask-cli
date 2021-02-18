@@ -21,7 +21,7 @@ jobs:
 
   build:
    
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -29,6 +29,10 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '12.x'
+    - name: Set up Python 3.x
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
     - run: git config --global user.email "ask-cli-test@amazon.com"
     - run: git config --global user.name "Ask Cli Test"
     - run: npm install
